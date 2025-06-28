@@ -1,4 +1,7 @@
 venv/
 .qodo
 .history
+captured_images/
+detection_results/
+request_logs/
 test.py
