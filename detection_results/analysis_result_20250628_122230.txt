@@ -1,0 +1,5 @@
+Tea Leaf Analysis Result
+Timestamp: 2025-06-28T12:22:30.599717
+Image: leaf_image_20250628_122200_a6ad5695.jpg
+AI Analysis:
+no

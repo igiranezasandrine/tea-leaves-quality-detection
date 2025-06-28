@@ -1,0 +1,46 @@
+{
+  "timestamp": "20250628_114823",
+  "request": {
+    "model": "gpt-4o",
+    "max_tokens": 500,
+    "messages": [
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Is tea leaf and has atleast 2 leaves and one bud? Reply with yes or no?"
+          },
+          {
+            "type": "image_url",
+            "image_url": {
+              "url": "[IMAGE_SAVED_AS_leaf_image_20250628_114820_b0f697e3.jpg]",
+              "detail": "auto"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "response": {
+    "id": "chatcmpl-720d2bdfafa247f79a358014c579de72",
+    "object": "chat.completion",
+    "created": 1751104103,
+    "model": "together-ai-vision-v1",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "Error analyzing tea leaves: Failed to get response from Together AI"
+        },
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 100,
+      "completion_tokens": 11,
+      "total_tokens": 111
+    }
+  }
+}

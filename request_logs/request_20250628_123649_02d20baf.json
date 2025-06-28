@@ -1,0 +1,46 @@
+{
+  "timestamp": "20250628_123649",
+  "request": {
+    "model": "gpt-4o",
+    "max_tokens": 500,
+    "messages": [
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Is tea leaf and has atleast 2 leaves and one bud? Reply with yes or no?"
+          },
+          {
+            "type": "image_url",
+            "image_url": {
+              "url": "[IMAGE_SAVED_AS_leaf_image_20250628_123540_9de516a6.jpg]",
+              "detail": "auto"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "response": {
+    "id": "chatcmpl-a135b31b253742339dfcf56ea55c7f23",
+    "object": "chat.completion",
+    "created": 1751107009,
+    "model": "together-ai-vision-v1",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "no"
+        },
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 100,
+      "completion_tokens": 1,
+      "total_tokens": 101
+    }
+  }
+}

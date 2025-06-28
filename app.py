@@ -9,11 +9,11 @@ import uuid
 import tempfile
 from dotenv import load_dotenv
 from together import Together
-
+load_dotenv()
 app = Flask(__name__)
 
 # Load environment variables
-load_dotenv()
+print("API KEyyyyyyyyyyyyyyyyyyyyyyyy: ",os.environ.get("TOGETHER_API_KEY"))
 
 # Create directories for saving images and logs
 IMAGES_DIR = "captured_images"
