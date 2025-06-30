@@ -11,7 +11,7 @@ from dotenv import load_dotenv
 from together import Together
 load_dotenv()
 app = Flask(__name__)
-
+#commm
 # Load environment variables
 print("API KEyyyyyyyyyyyyyyyyyyyyyyyy: ",os.environ.get("TOGETHER_API_KEY"))
 
