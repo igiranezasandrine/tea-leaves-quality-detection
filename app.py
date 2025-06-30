@@ -135,31 +135,33 @@ def get_vision_inference(image_bytes: bytes, prompt: str):
 
 def process_tea_image_with_ai(image_bytes):
     try:
-        prompt = """Carefully analyze this image of tea leaves and determine if it contains the ideal 'two leaves and a bud' plucking standard. 
+        prompt = """Analyze this tea leaf image carefully. Even if the image is blurry or low quality, 
+        determine if it likely shows the 'two leaves and a bud' plucking standard of Camellia sinensis.
 
-        Strict criteria for identification:
-        1. Must be actual tea leaves (Camellia sinensis) - not other plant species
-        2. Must clearly show two mature leaves and one new bud
-        3. Leaves should be properly attached in sequence:
-           - Bud at the tip (newest growth)
-           - First leaf immediately below bud (young but mature)
-           - Second leaf below first leaf (fully mature)
-        4. All three components must be present and clearly visible
-        5. Leaves should be healthy and not damaged
+        Strict evaluation guidelines:
+        1. Primary identification (MUST meet all):
+           - Visible bud (new growth tip)
+           - At least two attached leaves below bud
+           - Leaves appear to be properly sequenced
 
-        Common mistakes to avoid:
-        - Other plant species that may look similar
-        - Broken or incomplete leaves
-        - Leaves from different shoots grouped together
-        - Older growth with more than two leaves
-        - Just buds without accompanying leaves
-        - Just leaves without a bud
+        2. Acceptable in low-quality images:
+           - Some blurriness or focus issues
+           - Moderate shadows or lighting variations
+           - Minor obstructions (as long as key features are visible)
+           - Color variations due to image quality
 
-        If the image meets ALL these strict criteria, respond exactly with: "yes"
-        If ANY criteria are not met, respond exactly with: "no"
+        3. Automatic rejection (ANY of these):
+           - Clearly different plant species
+           - Only leaves without visible bud
+           - Only bud without leaves
+           - Damaged or incomplete leaves
+           - More than two main leaves visible
+           - Leaves not properly attached in sequence
 
-        Do not provide any explanation or additional text.
-        Be extremely strict in your evaluation."""
+        If the image clearly meets the standard despite quality issues: respond "yes"
+        If uncertain or any criteria not met: respond "no"
+
+        Respond with exactly one word, lowercase only: yes | no"""
         
         ai_response = get_vision_inference(image_bytes, prompt)
         
