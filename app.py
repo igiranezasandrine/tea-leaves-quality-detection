@@ -25,6 +25,56 @@ os.makedirs(LOGS_DIR, exist_ok=True)
 os.makedirs(RESULTS_DIR, exist_ok=True)
 
 client = Together()
+# ... (previous imports remain the same)
+
+@app.route('/get_image/<filename>', methods=['GET'])
+def get_image(filename):
+    """Route to serve a specific image by filename"""
+    try:
+        # Security check to prevent directory traversal
+        if '..' in filename or filename.startswith('/'):
+            return jsonify({"error": "Invalid filename"}), 400
+        
+        filepath = os.path.join(IMAGES_DIR, filename)
+        
+        # Check if file exists and is an image
+        if not os.path.exists(filepath):
+            return jsonify({"error": "Image not found"}), 404
+        
+        if not filename.lower().endswith(('.jpg', '.jpeg', '.png')):
+            return jsonify({"error": "Not an image file"}), 400
+        
+        # Return the image file
+        return send_file(filepath, mimetype='image/jpeg')
+    
+    except Exception as e:
+        print(f"Error serving image: {e}")
+        return jsonify({"error": str(e)}), 500
+
+def save_image_from_base64(base64_data, filename):
+    """Save base64 encoded image to file"""
+    try:
+        # Remove data URL prefix if present
+        if base64_data.startswith('data:image'):
+            base64_data = base64_data.split(',')[1]
+        
+        # Decode base64 data
+        image_data = base64.b64decode(base64_data)
+        
+        # Save to file
+        filepath = os.path.join(IMAGES_DIR, filename)
+        with open(filepath, 'wb') as f:
+            f.write(image_data)
+        
+        # Print the image link in terminal
+        print(f"\nImage saved. Access it at: http://{request.host}/get_image/{filename}\n")
+        
+        return filepath, image_data
+    except Exception as e:
+        print(f"Error saving image: {e}")
+        return None, None
+
+# ... (rest of the code remains the same)
 
 def get_vision_inference(image_bytes: bytes, prompt: str):
     try:
@@ -63,25 +113,25 @@ def get_vision_inference(image_bytes: bytes, prompt: str):
         print(f"Error getting vision inference: {e}")
         return None
 
-def save_image_from_base64(base64_data, filename):
-    """Save base64 encoded image to file"""
-    try:
-        # Remove data URL prefix if present
-        if base64_data.startswith('data:image'):
-            base64_data = base64_data.split(',')[1]
+# def save_image_from_base64(base64_data, filename):
+#     """Save base64 encoded image to file"""
+#     try:
+#         # Remove data URL prefix if present
+#         if base64_data.startswith('data:image'):
+#             base64_data = base64_data.split(',')[1]
         
-        # Decode base64 data
-        image_data = base64.b64decode(base64_data)
+#         # Decode base64 data
+#         image_data = base64.b64decode(base64_data)
         
-        # Save to file
-        filepath = os.path.join(IMAGES_DIR, filename)
-        with open(filepath, 'wb') as f:
-            f.write(image_data)
+#         # Save to file
+#         filepath = os.path.join(IMAGES_DIR, filename)
+#         with open(filepath, 'wb') as f:
+#             f.write(image_data)
         
-        return filepath, image_data
-    except Exception as e:
-        print(f"Error saving image: {e}")
-        return None, None
+#         return filepath, image_data
+#     except Exception as e:
+#         print(f"Error saving image: {e}")
+#         return None, None
 
 def process_tea_image_with_ai(image_bytes):
     try:
