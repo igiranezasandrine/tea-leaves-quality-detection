@@ -135,16 +135,31 @@ def get_vision_inference(image_bytes: bytes, prompt: str):
 
 def process_tea_image_with_ai(image_bytes):
     try:
-        prompt = """Is there a tea leaf with two leaves and one bud in this image? Respond only with:
+        prompt = """Carefully analyze this image of tea leaves and determine if it contains the ideal 'two leaves and a bud' plucking standard. 
 
-                    "yes"
+        Strict criteria for identification:
+        1. Must be actual tea leaves (Camellia sinensis) - not other plant species
+        2. Must clearly show two mature leaves and one new bud
+        3. Leaves should be properly attached in sequence:
+           - Bud at the tip (newest growth)
+           - First leaf immediately below bud (young but mature)
+           - Second leaf below first leaf (fully mature)
+        4. All three components must be present and clearly visible
+        5. Leaves should be healthy and not damaged
 
-                    or
+        Common mistakes to avoid:
+        - Other plant species that may look similar
+        - Broken or incomplete leaves
+        - Leaves from different shoots grouped together
+        - Older growth with more than two leaves
+        - Just buds without accompanying leaves
+        - Just leaves without a bud
 
-                    "no"
+        If the image meets ALL these strict criteria, respond exactly with: "yes"
+        If ANY criteria are not met, respond exactly with: "no"
 
-                    No additional explanation. No punctuation. Lowercase only but be strict in analyzing and distinguishing leaves make sure that it is tea leaf cause there is other leaves like that before respond.
-                    """
+        Do not provide any explanation or additional text.
+        Be extremely strict in your evaluation."""
         
         ai_response = get_vision_inference(image_bytes, prompt)
         
